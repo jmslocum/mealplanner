@@ -137,8 +137,7 @@ exports.updateMenuMealItemsById = function(req, res, next) {
         success : true,
         menu : menu
       }
-    }
-
+    });
   });
 }
 
