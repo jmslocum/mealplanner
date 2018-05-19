@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="/">MealPlanner</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="menudropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
+        <div class="dropdown-menu" aria-labelledby="menudropdown">
+          <a class="dropdown-item" id="generateWeekLink" href="#">Generate Week</a>
+          <a class="dropdown-item" id="generateMonthLink" href="#">Generate Month</a>
+          <a class="dropdown-item" href="/menu">Edit Menus</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="mealdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Meals</a>
+        <div class="dropdown-menu" aria-labelledby="mealdropdown">
+          <a class="dropdown-item" id="new-meal-link" href="/meal/new">New Meal</a>
+          <a class="dropdown-item" id="edit-meal-link" href="/meal/edit">Edit Meals</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

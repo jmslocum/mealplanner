@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+   <% include partials/header %>
+  </head>
+
+  <body>
+
+    <% include partials/nav %>
+
+    <main role="main" class="container">
+
+    <div class="starter-template">
+      <h1>Meal Planner</h1>
+      <p class="lead">Welcome to the MealPlanner! <br />To get started, choose 'Generate Month'
+      or 'Generate Week' from the Menu dropdown.</p>
+
+      <br/>
+
+      <i class="fas fa-utensils fa-5x"></i>
+      <% include partials/menu_display %>
+    </main><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <% include partials/js_imports %>
+      <script src="/js/picturetable.js"></script>
+  </body>
+</html>
+

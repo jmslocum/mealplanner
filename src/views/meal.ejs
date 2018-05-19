@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+   <% include partials/header %>
+  </head>
+
+  <body>
+
+    <% include partials/nav %>
+
+    <main role="main" class="container">
+    <div class="starter-template">
+      <% include partials/notifications %>
+      <h1>Add new meal</h1>
+      <div id="newMealFormContainer" >
+        <% include partials/new_meal_form %>
+      </div>
+
+    </div>
+    </main><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <% include partials/js_imports %>
+      <script src="/js/picturetable.js"></script>
+      <script src="/js/newmealform.js"></script>
+  </body>
+</html>
+

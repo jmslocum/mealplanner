@@ -1,0 +1,45 @@
+<% if (menu) { %>
+<div id="menu" class="full-menu">
+  <% for (let i = 0; i < menu.menu_items.length; i++) { %>
+    <div class="menu-item rounded-border">
+      <span class="day-of-week">
+        <%= menu.menu_items[i].day %>
+      </span>
+      <span class="date">
+        <%= dateformat(menu.menu_items[i].date, 'mmmm dS, yyyy') %>
+      </span>
+      <hr/>
+      <% if (menu.menu_items[i].eat_out) { %>
+        <span class="meal-name">
+          Eat out night
+        </span>
+        <span class="meal-description">
+          Have a nice dinner out
+        </span>
+      <% } else { %>
+        <span class="meal-name">
+          <%= menu.menu_items[i].meal.name %>
+        </span>
+        <span class="meal-description">
+          <%= menu.menu_items[i].meal.description %>
+        </span>
+      <% } %>
+
+      <% for (let j = 0; j < menu.menu_items[i].sides.length; j++) { %>
+        <div class="sides">
+          <span class="side-name">
+            <%= menu.menu_items[i].sides[j].name %>
+          </span>
+          <span class="side-description">
+            <%= menu.menu_items[i].sides[j].description %>
+          </span>
+        </div>
+      <% } %>
+
+    </div>
+  <% } %>
+</div>
+<% } else { %>
+<h2>No upcomming menus avilable</h2>
+<% } %>
+

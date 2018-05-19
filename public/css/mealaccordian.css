@@ -1,0 +1,68 @@
+#mealdisplay {
+  margin: 0 auto;
+}
+
+.mealCard {
+  margin: auto;
+  text-align: left;
+  max-width : 550px;
+  border-radius : 5px;
+  border : 1px solid; 
+}
+
+.mealTitle {
+  cursor : pointer;
+  padding-bottom: 10px;
+  border-bottom: 1px solid;
+  border-radius: 5px 5px 0px 0px;
+  transition: 0.4s;
+}
+
+.mealTitle, .mealDetails {
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
+.mealTypeTitle, .mealDifficultyTitle, .sideCountTitle, .sideDishesTitle {
+  font-weight: bold;
+}
+
+.mealDetails {
+  padding: 0 5px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+}
+
+.mealName {
+  padding-right: 10px;
+  font-size: 1.4em;
+}
+
+.mealSides {
+  padding-bottom: 10px;
+}
+
+.sideMeal {
+  padding-left : 30px;
+}
+
+.mealActive {
+  background : lightblue;
+}
+
+.mealActions {
+  text-align: right;
+  padding-right: 20px;
+  padding-bottom: 5px;
+}
+
+.mealInfo {
+  padding-top: 10px;
+}
+
+.mealImages > .thumbnail {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+}

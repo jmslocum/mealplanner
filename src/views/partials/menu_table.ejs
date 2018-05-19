@@ -1,0 +1,20 @@
+<table id="menu-table" class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Start Date</th>
+      <th scope="col">End Date</th>
+      <th scope="col">Created Date</th>
+      <th scope="col">Number Of Days</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (let i = 0; i < menus.length; i++) { %>
+      <tr>
+        <td><%= dateformat(menus[i].start_date, 'mm-dd-yyyy') %></td>
+        <td><%= dateformat(menus[i].end_date, 'mm-dd-yyyy') %></td>
+        <td><%= dateformat(menus[i].date_created, 'mm-dd-yyyy') %></td>
+        <td><%= menus[i].days_covered %></td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>

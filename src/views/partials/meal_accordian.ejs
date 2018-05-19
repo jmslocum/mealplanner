@@ -1,0 +1,89 @@
+<% if (meals) { %>
+<div id="mealdisplay">
+  <% for (let i = 0; i < meals.length; i++) { %>
+  <div class="mealCard" data-meal-id="<%= meals[i]._id %>">
+    <div class="mealTitle">
+      <span class="mealName"><%= meals[i].name %></span>
+      <span class="mealDescription">(<%= meals[i].description %>)</span>
+    </div>
+    <div class="mealDetails">
+      <div class="mealInfo" >
+        <div class="mealType">
+          <span class="mealTypeTitle">Type:</span>
+          <span class="mealTypeValue"><%= meals[i].type %></span>
+        </div>
+        <% if (meals[i].type === 'meal') { %>
+        <div class="mealDifficulty">
+          <span class="mealDifficultyTitle">Difficulty:</span>
+          <span class="mealDifficultyValue"><%= difficultyNames[meals[i].difficulty] %></span>
+        </div>
+        <div class="mealSides">
+          <span class="sideCountTitle">Number of sides:</span>
+          <span class="sideCountValue"><%= meals[i].number_of_sides %></span>
+          <% if (meals[i].perferred_sides.length > 0) { %>
+          <div class="sideDishes">
+            <span class="sideDishesTitle">Perferred Sides:</span>
+            <% for (let j = 0; j < meals[i].perferred_sides.length; j++) { %>
+            <div class="sideMeal">
+              <span class="sideMealName"><%= meals[i].perferred_sides[j].name %></span>
+              <span class="sideMealDescription">(<%= meals[i].perferred_sides[j].description %>)</span>
+            </div>
+            <% } %>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+        <% if (meals[i].images.length > 0) { %>
+        <div class="mealImages">
+          <% for (let j = 0; j < meals[i].images.length; j++) { %>
+            <img class="thumbnail" src="<%= meals[i].images[j].image_url %>" />
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+      <div class="mealActions">
+        <button class="editMealButton">
+          <i class="far fa-edit"></i> edit
+        </button>
+        <button class="deleteMealButton">
+          <i class="far fa-trash-alt"></i> delete
+        </button>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>
+<% } else {%>
+<h3>No meals avilable to show</h3>
+<% } %>
+
+<script>
+var cards = document.getElementsByClassName("mealTitle");
+
+for (let i = 0; i < cards.length; i++){
+  cards[i].addEventListener('click', function(event) {
+    if (!this.classList.contains('mealActive')){
+      collapseAll();
+    }
+
+    this.classList.toggle('mealActive');
+
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}
+
+function collapseAll(){
+  for (let i = 0; i < cards.length; i++){
+    if (cards[i].classList.contains('mealActive')){
+      cards[i].classList.toggle('mealActive');
+      var panel = cards[i].nextElementSibling;
+      panel.style.maxHeight = null;
+    }
+  }
+}
+</script>
