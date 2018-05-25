@@ -145,4 +145,8 @@ function resetForm() {
   $('#newMealForm').trigger('reset');
   $('#image-container').empty();
   $('input[name="imageId"]').remove();
+  $('#meal-difficulty-group').show();
+  $('#perferred-sides-group').show();
+  $('#number-of-sides-group').show();
+  $('#perferred-days-group').show();
 }

@@ -89,6 +89,24 @@ exports.getAllSides = function(req, res, next) {
     });
 }
 
+exports.getAllPseudoMeals = function(req, res, next) {
+  Meal.find({'type': 'pseudo'})
+    .populate('images')
+    .exec(function(error, records) {
+      if (error) {
+        return errorHandler(res, 500, 'Internal database error');
+      }
+
+      req.result = {
+        success : true, 
+        meal_count : records.length,
+        meals : records
+      };
+
+      return next();
+    });
+}
+
 exports.getAllMealsAndSides = function(req, res, next) {
   Meal.find({})
     .sort('type')

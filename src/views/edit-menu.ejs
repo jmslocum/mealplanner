@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+   <% include partials/header %>
+  </head>
+
+  <body>
+
+    <% include partials/nav %>
+    <% include partials/edit_menu_overlay %>
+
+    <main role="main" class="container">
+
+    <div class="starter-template">
+      <h1>Edit Menu</h1>
+      <br/>
+     
+      <div id="menuInfoSection">
+        <div class="menuStartDate">
+          <span class="menuStartDateTitle">Start Date: </span>
+          <span class="menuStartDateValue"><%= dateformat(menu.start_date, 'mm-dd-yyyy') %></span>
+        </div>
+        <div class="menuEndDate">
+          <span class="menuEndDateTitle">End Date: </span>
+          <span class="menuEndDateValue"><%= dateformat(menu.end_date, 'mm-dd-yyyy') %></span>
+        </div>
+        <div class="menuDateCreated">
+          <span class="menuDateCreatedTitle">Date Created: </span>
+          <span class="menuDateCreatedValue"><%= dateformat(menu.date_created, 'mm-dd-yyyy') %></span>
+        </div>
+        <div class="menuDateModified">
+          <span class="menuDateModifiedTitle">Date Modified: </span>
+          <span class="menuDateModifiedValue"><%= dateformat(menu.date_modified, 'mm-dd-yyyy') %></span>
+        </div>
+        <div class="menuDaysCovered">
+          <span class="menuDaysCoveredTitle">Days Covered: </span>
+          <span class="menuDaysCoveredValue"><%= menu.days_covered %></span>
+        </div>
+      </div>
+      
+
+      <% include partials/menu_display %>
+    </main><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <% include partials/js_imports %>
+      <script src="/js/editmenuitem.js"></script>
+  </body>
+</html>
+

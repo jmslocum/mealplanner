@@ -5,7 +5,7 @@ const menuController = require('../controllers/menuController');
 
 module.exports = router;
 
-router.get('/', menuController.getNextFullMenu, function(req, res) {
+router.get('/', menuController.getNextFullMenuForHomepage, function(req, res) {
   var options = {
     menu : req.result.menu,
     dateformat : require('dateformat')

@@ -26,7 +26,7 @@ var days = [
   {
     name : 'Thursday',
     difficulty : 'medium',
-    eat_out : true,
+    eat_out : false,
     id : 4
   }, 
   {
@@ -74,6 +74,25 @@ var mealTypes = [
   {
     name : 'Side',
     value : 'side'
+  },
+  {
+    name : 'Pseudo',
+    value : 'pseudo'
+  }
+];
+
+var pseudoMeals = [
+  {
+    _id : 1000,
+    name : 'Eat Out', 
+    description : 'Have a nice meal out',
+    type : 'pseudo'
+  },
+  {
+    _id : 1001,
+    name : 'Left Overs',
+    description : 'Left overs from previous meal',
+    type : 'pseudo'
   }
 ];
 
@@ -87,5 +106,6 @@ module.exports = {
   days : days,
   difficulties : difficulties,
   mealTypes : mealTypes,
+  pseudoMeals : pseudoMeals,
   selectionParameters : selectionParameters
 };

@@ -1,7 +1,7 @@
 <% if (menu) { %>
-<div id="menu" class="full-menu">
+<div id="menu" class="full-menu" data-menu-id="<%= menu._id %>">
   <% for (let i = 0; i < menu.menu_items.length; i++) { %>
-    <div class="menu-item rounded-border">
+    <div class="menu-item rounded-border" data-day="<%= menu.menu_items[i].date.getDay() %>">
       <span class="day-of-week">
         <%= menu.menu_items[i].day %>
       </span>
@@ -10,14 +10,14 @@
       </span>
       <hr/>
       <% if (menu.menu_items[i].eat_out) { %>
-        <span class="meal-name">
+        <span class="meal-name" data-meal-id="1000">
           Eat out night
         </span>
         <span class="meal-description">
           Have a nice dinner out
         </span>
       <% } else { %>
-        <span class="meal-name">
+        <span class="meal-name" data-meal-id="<%= menu.menu_items[i].meal._id %>">
           <%= menu.menu_items[i].meal.name %>
         </span>
         <span class="meal-description">
@@ -27,7 +27,7 @@
 
       <% for (let j = 0; j < menu.menu_items[i].sides.length; j++) { %>
         <div class="sides">
-          <span class="side-name">
+          <span class="side-name" data-side-id="<%= menu.menu_items[i].sides[j]._id %>">
             <%= menu.menu_items[i].sides[j].name %>
           </span>
           <span class="side-description">

@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     <% for (let i = 0; i < menus.length; i++) { %>
-      <tr>
+      <tr class="menu-row" data-menu-id="<%= menus[i]._id %>">
         <td><%= dateformat(menus[i].start_date, 'mm-dd-yyyy') %></td>
         <td><%= dateformat(menus[i].end_date, 'mm-dd-yyyy') %></td>
         <td><%= dateformat(menus[i].date_created, 'mm-dd-yyyy') %></td>

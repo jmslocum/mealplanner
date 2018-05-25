@@ -22,7 +22,10 @@ exports.getAllMenus = function(req, res, next) {
 }
 
 exports.getMenuById = function(req, res, next) {
-  Menu.findById(req.params.id).exec(function(error, record) {
+  Menu.findById(req.params.id)
+    .populate('menu_items.meal')
+    .populate('menu_items.sides')
+    .exec(function(error, record) {
     if (error) {
       return errorHandler(res, 500, 'Internal database error');
     }
@@ -37,7 +40,7 @@ exports.getMenuById = function(req, res, next) {
 }
 
 exports.generateNextWeekMenu = function(req, res, next) {
-  var menu = generateNextWeekMenu(req.meals.meals);
+  var menu = generateNextWeekMenu(req.result.meals);
   
   if (!menu) {
     return errorHandler(res, 500, 'Unable to generate menu');
@@ -113,7 +116,29 @@ exports.getNextFullMenu = function(req, res, next) {
     });
 }
 
-exports.updateMenuMealItemsById = function(req, res, next) {
+exports.getNextFullMenuForHomepage = function(req, res, next) {
+  var now = new Date();
+  var start = dateUtils.getStartOfNextWeek(now);
+  var end = dateUtils.getEndOfNextWeek(now);
+
+  Menu.findOne({'start_date' : {'$gte' : start}, 'end_date' : {'$lte' : end}})
+    .populate('menu_items.meal')
+    .populate('menu_items.sides')
+    .exec(function(error, record) {
+      if (error){
+        return errorHandler(res, 500, 'Internal database error');
+      }
+
+      req.result = {
+        success : true,
+        menu : record
+      };
+
+      return next();
+    });
+}
+
+exports.updateMenuMealItemsByDay = function(req, res, next) {
   Menu.findById(req.params.id).exec(function(error, record) {
     if (error){
       return errorHandler(res, 500, 'Internal database error');
@@ -122,11 +147,22 @@ exports.updateMenuMealItemsById = function(req, res, next) {
     if (!record){
       return errorHandler(res, 404, 'No records match id');
     }
-
+    
+    var day = req.params.day;
     var menu = record;
     menu.date_modified = new Date();
 
-    //TODO complete this function
+    //TODO Fix this hard-codeing by added pseudo meals. 
+    if (req.body.mealId == '1000') {
+      menu.menu_items[day].eat_out = true;
+      menu.menu_items[day].meal = null;
+      menu.menu_items[day].sides = [];
+    }
+    else {
+      menu.menu_items[day].eat_out = false;
+      menu.menu_items[day].meal = req.body.mealId; 
+      menu.menu_items[day].sides = req.body.sideIds;
+    }
 
     menu.save(function(error) {
       if (error) {
@@ -136,7 +172,9 @@ exports.updateMenuMealItemsById = function(req, res, next) {
       req.result = {
         success : true,
         menu : menu
-      }
+      };
+
+      return next();
     });
   });
 }
@@ -199,6 +237,7 @@ function generateMenuForDateRange(start, end, meals) {
 
   //Generate the meal plan for the week
   var current = start;
+  var lastmeal = null;
   while(current.valueOf() <= end.valueOf()){
     var meal = selectMeal(current, sortedMeals);
     var sides = selectSides(meal, sortedMeals.sides);
@@ -219,6 +258,7 @@ function generateMenuForDateRange(start, end, meals) {
     }
 
     current = dateUtils.tomorrow(current);
+    lastmeal = meal;
   }
 
   return weekMenu;
@@ -241,6 +281,7 @@ function collectMeals(meals) {
     }
     else {
       collection.difficulties[meal.difficulty].push(meal);
+
       if (meal.perferred_days.length > 0){
         for (j = 0; j < meal.perferred_days.length; j++){
           var day = meal.perferred_days[j];
@@ -249,18 +290,17 @@ function collectMeals(meals) {
       }
     }
   }
-
+  
   return collection;
 }
 
 /**
  *  This will select a meal for the specified day based on the configuration criteria
- *  and some randomness. 
+ *  and some randomness.
  */
 function selectMeal(date, sortedMeals) {
   var day = date.getDay();
   var dayConfig = config.days[day];
-  var difficulty = getDifficultyIndex(dayConfig.difficulty);
   var meal = null;
 
   //Should we just eat out?? 
@@ -268,19 +308,23 @@ function selectMeal(date, sortedMeals) {
     return null;
   }
 
-  if (sortedMeals.days[day].length > 0){
-    if (meetsThreshold(config.selectionParameters.use_perferred_days)) {
-      var randomIndex = getRandomIndex(sortedMeals.days[day].length);
-      meal = sortedMeals.days[day][randomIndex];
+  while(!meal) {
+    var difficulty = getRandomIndex(getDifficultyIndex(dayConfig.difficulty)) + 1;
+    
+    if (sortedMeals.days[day].length > 0){
+      if (meetsThreshold(config.selectionParameters.use_perferred_days)) {
+        var randomIndex = getRandomIndex(sortedMeals.days[day].length);
+        meal = sortedMeals.days[day][randomIndex];
+      }
+      else {
+        var randomIndex = getRandomIndex(sortedMeals.difficulties[difficulty].length);
+        meal = sortedMeals.difficulties[difficulty][randomIndex];
+      }
     }
     else {
       var randomIndex = getRandomIndex(sortedMeals.difficulties[difficulty].length);
       meal = sortedMeals.difficulties[difficulty][randomIndex];
     }
-  }
-  else {
-    var randomIndex = getRandomIndex(sortedMeals.difficulties[difficulty].length);
-    meal = sortedMeals.difficulties[difficulty][randomIndex];
   }
 
   return meal;
@@ -296,28 +340,29 @@ function selectSides(meal, sides) {
   if (!meal || !sides) {
     return [];
   }
+  
+  var sidesCopy = JSON.parse(JSON.stringify(sides));
+  var sideDishes = new Set();
+  var remainingTries = 5;
 
-  var sideDishes = [];
-  var tries = 20;
+  while(sideDishes.size < meal.number_of_sides && remainingTries > 0) {
+    remainingTries -= 1;
 
-  while(sideDishes.length < meal.number_of_sides && tries >= 0) {
-    tries -= 1;
     if (meal.perferred_sides && meal.perferred_sides.length > 0 && 
         meetsThreshold(config.selectionParameters.use_perferred_side)) {
+
       let id = meal.perferred_sides[getRandomIndex(meal.perferred_sides.length)]._id;
-      if (!sideDishes.includes(id)) {
-        sideDishes.push(id);
-      }
+
+      sideDishes.add(id);
     }
     else if (sides.length > 0){
       let id = sides[getRandomIndex(sides.length)]._id;
-      if (!sideDishes.includes(id)) {
-        sideDishes.push(id);
-      }
+
+      sideDishes.add(id);
     }
   }
 
-  return sideDishes;
+  return Array.from(sideDishes);
 }
 
 /**

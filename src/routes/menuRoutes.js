@@ -14,8 +14,17 @@ router.get('/', menuController.getAllMenus, function(req, res) {
   res.render('menu', options);
 });
 
+router.get('/edit/:id', menuController.getMenuById, function(req, res) {
+   var options = {
+    menu : req.result.menu,
+    dateformat : dateFormat
+  };
+
+  res.render('edit-menu', options);
+});
+
 router.get('/new/week', 
-    mealController.getAllMeals, 
+    mealController.getAll, 
     menuController.generateNextWeekMenu, 
     function(req, res) {
   res.json(req.result);
@@ -34,6 +43,10 @@ router.get('/next', menuController.getNextFullMenu, function(req, res) {
 });
 
 router.delete('/:id', menuController.deleteMenuById, function(req, res) {
+  res.json(req.result);
+});
+
+router.post('/:id/meal/:day', menuController.updateMenuMealItemsByDay, function(req, res) {
   res.json(req.result);
 });
 

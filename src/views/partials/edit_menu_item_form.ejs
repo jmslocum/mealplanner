@@ -1,0 +1,22 @@
+<form id="editMenuForm">
+  <div class="form-group" id="meal-difficulty-group">
+    <label for="mealSelection">Meal</label>
+    <select name="mealId" class="form-control" id="mealSelection">
+      <!-- options populated by js -->
+    </select>
+  </div>
+
+  <div class="form-group" id="perferred-sides-group">
+    <label for="choosenSides">Sides</label>
+    <select multiple name="choosenSides" class="form-control" id="choosenSides">
+      <!-- options populated by js -->
+    </select>
+  </div>
+
+  <input type="hidden" name="dayIndex" id="dayIndex" />
+
+  <br />
+  <button id="menuFormSubmitButton" type="submit" class="btn btn-primary">Submit</button>
+
+  <button id="menuFormCancelButton" type="reset" class="btn btn-secondary">Cancel</button>
+</form>
