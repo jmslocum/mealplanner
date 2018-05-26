@@ -17,7 +17,8 @@ $(document).ready(function() {
       dataType : 'json'
     })
     .done(function(response) {
-      window.location.replace('/menu');
+      //Just reload the edit page
+      location.reload();
     })
     .fail(function(error) {
       console.error('Unable to delete meal: ' + JSON.stringify(error));

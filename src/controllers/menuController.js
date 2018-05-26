@@ -189,6 +189,8 @@ exports.deleteMenuById = function(req, res, next) {
       success : true,
       menu : record
     }
+
+    return next();
   });
 }
 
