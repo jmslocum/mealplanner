@@ -230,7 +230,7 @@ function generateMenuForDateRange(start, end, meals) {
   weekMenu.date_modified = weekMenu.date_created;
   weekMenu.start_date = start;
   weekMenu.end_date = end;
-  weekMenu.days_covered = (end.getDate() - start.getDate()) + 1;
+  weekMenu.days_covered = getDaysBetweenDates(start, end) + 1;
   weekMenu.menu_items = [];
 
   var sortedMeals = collectMeals(meals);
@@ -402,4 +402,9 @@ function errorHandler(res, statusCode, errorString) {
   }
 
   return res.json(response);
+}
+
+function getDaysBetweenDates(startDate, endDate) {
+  var diff = endDate - startDate;
+  return (Math.floor(diff / (1000 * 60 * 60 * 24)));
 }

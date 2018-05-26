@@ -14,7 +14,8 @@
     <div class="starter-template">
       <h1>Edit Menu</h1>
       <br/>
-     
+
+      <% if (menu) { %> 
       <div id="menuInfoSection">
         <div class="menuStartDate">
           <span class="menuStartDateTitle">Start Date: </span>
@@ -40,6 +41,11 @@
       
 
       <% include partials/menu_display %>
+
+      <% } else { %>
+      <span class='noMenuToShowTitle'>Unable to find the requeted menu</span>
+      <% } %>
+
     </main><!-- /.container -->
 
     <!-- Bootstrap core JavaScript
