@@ -4,7 +4,9 @@
   <div class="mealCard" data-meal-id="<%= meals[i]._id %>">
     <div class="mealTitle">
       <span class="mealName"><%= meals[i].name %></span>
+      <% if (meals[i].description && meals[i].description.length > 0) { %>
       <span class="mealDescription">(<%= meals[i].description %>)</span>
+      <% } %>
     </div>
     <div class="mealDetails">
       <div class="mealInfo" >
@@ -36,7 +38,9 @@
         <% if (meals[i].images.length > 0) { %>
         <div class="mealImages">
           <% for (let j = 0; j < meals[i].images.length; j++) { %>
+          <a href="<%= meals[i].images[j].image_url %>">
             <img class="thumbnail" src="<%= meals[i].images[j].image_url %>" />
+          </a>
           <% } %>
         </div>
         <% } %>

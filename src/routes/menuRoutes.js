@@ -23,6 +23,15 @@ router.get('/edit/:id', menuController.getMenuById, function(req, res) {
   res.render('edit-menu', options);
 });
 
+router.get('/print/:id', menuController.getMenuById, function(req, res) {
+  var options = {
+    menu : req.result.menu,
+    dateformat : dateFormat
+  };
+
+  res.render('print-menu', options);
+});
+
 router.get('/new/week', 
     mealController.getAll, 
     menuController.generateNextWeekMenu, 

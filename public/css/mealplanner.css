@@ -71,10 +71,6 @@ body {
   transition : 0.4s;
 }
 
-.menu-item:hover {
-  background : #DDD;
-}
-
 .day-of-week {
   margin-left: 8px;
   margin-top : 8px;

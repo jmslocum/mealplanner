@@ -31,6 +31,7 @@ exports.newMeal = function(req, res, next) {
 
 exports.getAll = function(req, res, next) {
   Meal.find({})
+    .sort({'name' : 'asc'})
     .populate('images')
     .populate('perferred_sides')
     .exec(function(error, records) {
