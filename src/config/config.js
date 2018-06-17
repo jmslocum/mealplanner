@@ -83,13 +83,13 @@ var mealTypes = [
 
 var pseudoMeals = [
   {
-    _id : 1000,
+    _id : '000000000000000000001000',
     name : 'Eat Out', 
     description : 'Have a nice meal out',
     type : 'pseudo'
   },
   {
-    _id : 1001,
+    _id : '000000000000000000001001',
     name : 'Left Overs',
     description : 'Left overs from previous meal',
     type : 'pseudo'
