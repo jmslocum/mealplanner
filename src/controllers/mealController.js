@@ -56,6 +56,7 @@ exports.getAll = function(req, res, next) {
 
 exports.getAllMeals = function(req, res, next) {
   Meal.find({'type' : 'meal'})
+    .sort({'name' : 'asc'})
     .populate('images')
     .exec(function(error, records) {
       if(error) {
@@ -74,6 +75,7 @@ exports.getAllMeals = function(req, res, next) {
 
 exports.getAllSides = function(req, res, next) {
   Meal.find({'type' : 'side'})
+    .sort({'name' : 'asc'})
     .populate('images')
     .exec(function(error, records) {
       if(error) {
@@ -92,6 +94,7 @@ exports.getAllSides = function(req, res, next) {
 
 exports.getAllPseudoMeals = function(req, res, next) {
   Meal.find({'type': 'pseudo'})
+    .sort({'name' : 'asc'})
     .populate('images')
     .exec(function(error, records) {
       if (error) {
@@ -219,6 +222,9 @@ exports.deleteMealById = function(req, res, next) {
       };
 
       return next();
+    }
+    else {
+      return errorHandler(res, 404, 'Unable to find meal with id: ' + req.params.id);
     }
   });
 }
