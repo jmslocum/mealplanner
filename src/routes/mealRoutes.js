@@ -40,6 +40,10 @@ router.get('/sides', mealController.getAllSides, function(req, res) {
   res.json(req.result);
 });
 
+router.get('/pseudo', mealController.getAllPseudoMeals, function(req, res) {
+  res.json(req.result);
+});
+
 router.get('/:id', mealController.getMealById, function(req, res) {
   res.json(req.result);
 });

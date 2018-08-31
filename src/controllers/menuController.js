@@ -281,6 +281,9 @@ function collectMeals(meals) {
     if (meal.type === 'side'){
       collection.sides.push(meal);
     }
+    else if (meal.type == 'pseudo') {
+      collection.difficulties[0].push(meal);
+    }
     else {
       collection.difficulties[meal.difficulty].push(meal);
 

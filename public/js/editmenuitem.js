@@ -2,8 +2,10 @@
 
   var allMeals = null;
   var allSides = null;
+  var pseudoMeals = null;
 
   $(document).ready(function() {
+    fetchAllPseudoMeals();
     fetchAllMeals();
     fetchAllSides();
 
@@ -56,6 +58,27 @@
       event.preventDefault();
     });
   });
+
+  function fetchAllPseudoMeals() {
+    $.ajax({
+      url : '/meal/pseudo',
+      method : 'GET',
+      dataType : 'json'
+    })
+    .done(function(meals) {
+      allPseudoMeals = meals;
+
+      $.each(meals.meals, function(i, meal) {
+        $('#mealSelection').append($('<option>', {
+          value : meal._id,
+          text : meal.name
+        }));
+      });
+    })
+    .fail(function(error) {
+      console.error('Unable to fetch meals from API');
+    });
+  }
 
   function fetchAllMeals() {
     $.ajax({

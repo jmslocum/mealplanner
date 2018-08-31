@@ -107,5 +107,7 @@ module.exports = {
   difficulties : difficulties,
   mealTypes : mealTypes,
   pseudoMeals : pseudoMeals,
-  selectionParameters : selectionParameters
+  selectionParameters : selectionParameters,
+  eatOutMeal : pseudoMeals[0],
+  leftOverMeal : pseudoMeals[1]
 };
