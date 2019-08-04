@@ -27,7 +27,7 @@ exports.newMeal = function(req, res, next) {
 
     return next();
   });
-};
+}
 
 exports.getAll = function(req, res, next) {
   Meal.find({})

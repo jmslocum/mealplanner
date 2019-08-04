@@ -12,16 +12,17 @@ var app = express();
 var port = process.env.PORT || 8080;
 
 //Set up the server to log all requests to the console
-//app.use(morgan('dev'));
+app.use(morgan('dev'));
 
 //Set up the server to log to the /var/log/mealplanner directory
+/*
 var accessLogStream = rfs('mealplanner-access.log', {
   interval: '1d',
   path: '/var/log/mealplanner'
 });
 
 app.use(morgan('combined', {stream: accessLogStream}));
-
+*/
 //Serve everything in the public directory statically
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -47,12 +48,14 @@ var imageRoutes = require('./src/routes/imageRoutes');
 var mealRoutes = require('./src/routes/mealRoutes');
 var configRoutes = require('./src/routes/configRoutes');
 var menuRoutes = require('./src/routes/menuRoutes');
+var inventoryRoutes = require('./src/routes/inventoryRoutes');
 
 app.use('/', routes);
 app.use('/image', imageRoutes);
 app.use('/meal', mealRoutes);
 app.use('/config', configRoutes);
 app.use('/menu', menuRoutes);
+app.use('/inventory', inventoryRoutes);
 
 app.listen(port, function(err) {
   if (err) {
