@@ -44,15 +44,73 @@ exports.getAll = function(req, res, next) {
 }
 
 exports.getItemById = function(req, res, next) {
-    return next();
+  Item.findById(req.params.id)
+    .populate('images')
+    .exec((error, record) => {
+      if (error) {
+        return errorHandler(res, 500, 'Internal database error');
+      }
+
+      req.result = {
+        success : true,
+        item_count : 1,
+        item : record
+      };
+
+      return next();
+    });
 }
 
 exports.updateItemById = function(req, res, next) {
-    return next();
+  Item.findById(req.params.id)
+    .exec((error, record) => {
+      if (error) {
+        return errorHandler(res, 500, 'Internal database error');
+      }
+
+      if (record) {
+        record.name = req.body.name;
+        record.images = req.body.images;
+        record.count = req.body.count;
+
+        record.save((error) => {
+          if (error) {
+            return errorHandler(res, 500, 'Internal database error');
+          }
+
+          req.result = {
+            success : true,
+            item_id : record._id
+          };
+
+          return next();
+        });
+      }
+      else {
+        return errorHandler(res, 404, 'Inventory item not found');
+      }
+    });
 }
 
 exports.deleteItemById = function(req, res, next) {
-    return next();
+  Item.findByIdAndRemove(req.params.id, (error, record) => {
+    if (error) {
+      return errorHandler(res, 500, "Internal database error");
+    }
+
+    if (record) {
+      req.result = {
+        success : true,
+        item_count : 1,
+        item : record
+      };
+
+      return next();
+    }
+    else {
+      return errorHandler(res, 404, 'Unable to find inventory item with id: ' + req.params.id);
+    }
+  }):
 }
 
 /***************************************************************

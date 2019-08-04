@@ -180,7 +180,6 @@ exports.updateMealById = function(req, res, next) {
 
       meal.save(function(error) {
         if (error) {
-          console.log(error);
           return errorHandler(res, 500, 'Internal database error');
         }
 
