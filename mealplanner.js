@@ -1,5 +1,7 @@
 var express = require('express');
 var morgan = require('morgan');
+var path = require('path');
+var rfs = require('rotating-file-stream');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var fileUpload = require('express-fileupload');
@@ -10,10 +12,18 @@ var app = express();
 var port = process.env.PORT || 8080;
 
 //Set up the server to log all requests to the console
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
+
+//Set up the server to log to the /var/log/mealplanner directory
+var accessLogStream = rfs('mealplanner-access.log', {
+  interval: '1d',
+  path: '/var/log/mealplanner'
+});
+
+app.use(morgan('combined', {stream: accessLogStream}));
 
 //Serve everything in the public directory statically
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
@@ -21,7 +31,7 @@ app.use(cookieParser());
 app.use(fileUpload());
 
 //Set up the view engine
-app.set('views', 'src/views');
+app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'ejs');
 
 //Connect the database
