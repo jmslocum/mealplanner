@@ -17,7 +17,8 @@ exports.newItem = function(req, res, next) {
 
     req.result = {
       success : true,
-      item_id : item._id
+      item_id : item._id,
+      item : item
     };
 
     return next();
@@ -69,8 +70,7 @@ exports.updateItemById = function(req, res, next) {
       }
 
       if (record) {
-        record.name = req.body.name;
-        record.images = req.body.images;
+        //Only update count data
         record.count = req.body.count;
 
         record.save((error) => {
@@ -80,7 +80,8 @@ exports.updateItemById = function(req, res, next) {
 
           req.result = {
             success : true,
-            item_id : record._id
+            item_id : record._id,
+            count : record.count
           };
 
           return next();
@@ -110,7 +111,7 @@ exports.deleteItemById = function(req, res, next) {
     else {
       return errorHandler(res, 404, 'Unable to find inventory item with id: ' + req.params.id);
     }
-  }):
+  });
 }
 
 /***************************************************************

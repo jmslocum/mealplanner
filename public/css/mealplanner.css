@@ -95,3 +95,11 @@ body {
   float: right;
   color: #666;
 }
+
+#new-inventory-input {
+  margin-bottom: 20px;
+}
+
+.delete-item {
+  margin-left: 5px;
+}

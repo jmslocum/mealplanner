@@ -11,8 +11,15 @@
     <main role="main" class="container">
     <div class="starter-template">
       <% include partials/notifications %>
-      <h1>Add New Food To The Inventory</h1>
+      <h1>Inventory</h1>
+      <p class="lead">Welcome to the MealPlanner! <br />Here are the contents of the freezer</p>
+
+      <br/>
+
+      <i class="fas fa-icicles fa-5x"></i>
+
       <div id="newItemFormContainer" >
+        <% include partials/freezer_inventory %>
       </div>
 
     </div>
@@ -23,7 +30,7 @@
       <!-- Placed at the end of the document so the pages load faster -->
       <% include partials/js_imports %>
       <script src="/js/picturetable.js"></script>
-      <script src="/js/newmealform.js"></script>
+      <script src="/js/freezerinventory.js"></script>
   </body>
 </html>
 

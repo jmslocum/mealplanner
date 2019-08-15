@@ -35,6 +35,10 @@ app.use(fileUpload());
 app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'ejs');
 
+//Get rid of warnings
+mongoose.set('useFindAndModify', false);
+mongoose.set('useNewUrlParser', true);
+
 //Connect the database
 mongoose.connect(dbConfig.url).catch(function(error) {
   if (error) {
