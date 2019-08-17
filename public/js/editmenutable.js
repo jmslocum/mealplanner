@@ -4,6 +4,10 @@ $(document).ready(function() {
       return;
     }
 
+    if ($(event.target).is('button.printMenuButton')) {
+      return;
+    }
+
     var id = $(this).data('menu-id');
     document.location.href = '/menu/edit/' + id;
   });

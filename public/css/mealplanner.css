@@ -103,3 +103,20 @@ body {
 .delete-item {
   margin-left: 5px;
 }
+
+.item-count {
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.freezer-item-highlight-green {
+  color: lightgreen;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.freezer-item-highlight-red {
+  color: red;
+  font-weight: bold;
+  transition: all 0.2s;
+}

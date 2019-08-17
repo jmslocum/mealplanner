@@ -51,7 +51,12 @@ function attachButtonListeners(itemRowElement) {
     let countElement = row.find('.item-count');
     let id = row.data('item-id');
     let count = parseInt(countElement.text());
-    updateItemById(id, count-1, countElement);
+    if (count <= 0) {
+      flashRed(countElement);
+    }
+    else {
+      updateItemById(id, count-1, countElement);
+    }
     e.preventDefault();
   });
 
@@ -88,8 +93,10 @@ function updateItemById(id, count, countElement) {
     contentType: false
   }).done((response) => {
     countElement.html(response.count); 
+    flashGreen(countElement);
   }).fail((error) => {
     console.error(error);
+    flashRed(countElement);
   });
 }
 
@@ -126,6 +133,21 @@ function createNewItem(name) {
     console.error(error);
   });
 }
+
+function flashGreen(element) {
+  element.addClass('freezer-item-highlight-green');
+  setTimeout(() => {
+    element.removeClass('freezer-item-highlight-green');
+  }, 400);
+}
+
+function flashRed(element) {
+  element.addClass('freezer-item-highlight-red');
+  setTimeout(() => {
+    element.removeClass('freezer-item-highlight-red');
+  }, 400);
+}
+
 
 /**
  * runs when the document loads
