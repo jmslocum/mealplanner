@@ -62,8 +62,8 @@ exports.generateNextWeekMenu = function(req, res, next) {
 
 exports.getCurrentFullMenu = function(req, res, next) {
   var now = new Date();
-  var start = dateUtils.getStartOfTheWeek(now);
-  var end = dateUtils.getEndOfTheWeek(now);
+  var start = dateUtils.getStartOfWeek(now);
+  var end = dateUtils.getEndOfWeek(now);
 
   Menu.findOne({'start_date' : {'$gte' : start}, 'end_date' : {'$lte' : end}})
     .populate('menu_items.meal')
@@ -118,8 +118,8 @@ exports.getNextFullMenu = function(req, res, next) {
 
 exports.getNextFullMenuForHomepage = function(req, res, next) {
   var now = new Date();
-  var start = dateUtils.getStartOfNextWeek(now);
-  var end = dateUtils.getEndOfNextWeek(now);
+  var start = dateUtils.getStartOfWeek(now);
+  var end = dateUtils.getEndOfWeek(now);
 
   Menu.findOne({'start_date' : {'$gte' : start}, 'end_date' : {'$lte' : end}})
     .populate('menu_items.meal')
@@ -216,8 +216,8 @@ function generateNextWeekMenu(meals) {
  */
 function generateCurrentWeekMenu(meals) {
   var today = new Date();
-  var start = dateUtils.getStartOfTheWeek(today);
-  var end = dateUtils.getEndOfTheWeek(today);
+  var start = dateUtils.getStartOfWeek(today);
+  var end = dateUtils.getEndOfWeek(today);
 
   return generateMenuForDateRange(star, end, meals);
 }

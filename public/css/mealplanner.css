@@ -7,6 +7,10 @@ body {
   text-align: center;
 }
 
+#page-logo {
+  margin-bottom: 15px;
+}
+
 .img-thumbnail {
   width : 80px;
 }
