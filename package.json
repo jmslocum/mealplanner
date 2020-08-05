@@ -14,7 +14,7 @@
     "dateformat": "^3.0.3",
     "ejs": "^2.5.8",
     "express": "^4.16.3",
-    "express-fileupload": "^0.4.0",
+    "express-fileupload": "^1.1.9",
     "migrate": "^1.5.0",
     "mongoose": "^5.6.8",
     "morgan": "^1.9.0",
